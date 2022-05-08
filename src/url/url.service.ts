@@ -15,6 +15,7 @@ export class UrlService {
     const existingUrl = await urlRepository.findOne({
       where: { shortCode: url },
     });
+    if (!existingUrl) throw new HttpException("Url doesn't exist!", 404);
     existingUrl.visitCount++;
     UrlDataSource.manager.save(existingUrl);
 
@@ -64,4 +65,3 @@ export class UrlService {
       .json({ ...newUrl, shortUrl: process.env.HOST + shortCode });
   }
 }
-//TODO secret key
