@@ -18,10 +18,10 @@ import { Throttle } from '@nestjs/throttler';
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
-  @Get()
-  showIndexPage(@Res() res: Response) {
-    return this.urlService.showIndexPage(res);
-  }
+  // @Get()
+  // showIndexPage(@Res() res: Response) {
+  //   return this.urlService.showIndexPage(res);
+  // }
 
   @Get(':url')
   goToUrl(@Param() params, @Res() res) {
