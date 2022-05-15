@@ -6,23 +6,28 @@ import { UrlDataSource } from './url-data-source';
 import createShortCode from './helpers/createShortCode';
 import { addHttp, isUrl } from './helpers/urlHelpers';
 import { IUrlQuery } from './types';
+import { pagesRoot } from '../app.module';
+import * as path from 'path';
 
 const urlRepository = UrlDataSource.getRepository(Url);
 
 @Injectable()
 export class UrlService {
-  async goToUrl(url: string) {
+  async goToUrl(res: Response, url: string) {
     const existingUrl = await urlRepository.findOne({
       where: { shortCode: url },
     });
-    if (!existingUrl) throw new HttpException("Url doesn't exist!", 404);
+    if (!existingUrl) {
+      return res.sendFile(path.join(pagesRoot, '404.html'));
+      // throw new HttpException("Url doesn't exist!", 404);
+    }
     existingUrl.visitCount++;
     UrlDataSource.manager.save(existingUrl);
 
-    if (existingUrl) {
-      return { url: existingUrl.longUrl };
-    }
-    throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    // if (existingUrl) {
+    return res.redirect(existingUrl.longUrl);
+    // }
+    // throw new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 
   async shortCode(res: Response, dto: AddUrlDto, query: IUrlQuery) {
@@ -63,5 +68,9 @@ export class UrlService {
     return res
       .status(201)
       .json({ ...newUrl, shortUrl: process.env.HOST + shortCode });
+  }
+
+  showIndexPage(res: Response) {
+    return res.sendFile(path.join(pagesRoot, 'index.html'));
   }
 }

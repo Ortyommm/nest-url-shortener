@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UrlModule } from './url/url.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -30,3 +31,4 @@ import { APP_GUARD } from '@nestjs/core';
   ],
 })
 export class AppModule {}
+export const pagesRoot = path.join(__dirname, '..', 'pages');
