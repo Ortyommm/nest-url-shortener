@@ -19,12 +19,12 @@ export class UrlService {
       where: { shortCode: url },
     });
     if (!existingUrl) {
-      // if (
-      //   removeSlashes(url) === removeSlashes(new URL(process.env.HOST).pathname)
-      // ) {
-      //   return res.sendFile(path.join(pagesRoot, 'index.html'));
-      // }
-      // return res.sendFile(path.join(pagesRoot, '404.html'));
+      if (
+        removeSlashes(url) === removeSlashes(new URL(process.env.HOST).pathname)
+      ) {
+        return res.sendFile(path.join(pagesRoot, 'index.html'));
+      }
+      return res.sendFile(path.join(pagesRoot, '404.html'));
       // throw new HttpException("Url doesn't exist!", 404);
     }
     existingUrl.visitCount++;

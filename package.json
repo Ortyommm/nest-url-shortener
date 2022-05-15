@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/throttler": "^2.0.1",
     "@nestjs/typeorm": "^8.0.3",
+    "dotenv": "^16.0.1",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
