@@ -77,7 +77,7 @@ export class UrlService {
       .json({ ...newUrl, shortUrl: process.env.HOST + shortCode });
   }
 
-  showIndexPage(res: Response) {
-    return res.sendFile(path.join(pagesRoot, 'index.html'));
-  }
+  // showIndexPage(res: Response) {
+  //   return res.sendFile(path.join(pagesRoot, 'index.html'));
+  // }
 }
