@@ -13,15 +13,17 @@ import { UrlService } from './url.service';
 import { AddUrlDto } from './dto/add-url.dto';
 import { IUrlQuery } from './types';
 import { Throttle } from '@nestjs/throttler';
+import 'dotenv/config';
 
-@Controller()
+// You can use site subdirectories for url shortener. For example, example.com/c/ instead of example.com
+@Controller(process.env.HOST ? new URL(process.env.HOST).pathname : '/')
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
-  // @Get()
-  // showIndexPage(@Res() res: Response) {
-  //   return this.urlService.showIndexPage(res);
-  // }
+  @Get()
+  showIndexPage(@Res() res: Response) {
+    return this.urlService.showIndexPage(res);
+  }
 
   @Get(':url')
   goToUrl(@Param() params, @Res() res) {
