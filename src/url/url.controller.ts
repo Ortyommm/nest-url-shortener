@@ -13,13 +13,15 @@ import { UrlService } from './url.service';
 import { AddUrlDto } from './dto/add-url.dto';
 import { IUrlQuery } from './types';
 import { Throttle } from '@nestjs/throttler';
-import { rootPath } from '../app.module';
+// Because nest config doesn't pass variables to decorator
+import 'dotenv/config';
 
 @Controller()
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
-  @Get(rootPath)
+  // You can use site subdirectories for url shortener. For example, example.com/c/ instead of example.com
+  @Get(process.env.HOST ? new URL(process.env.HOST).pathname : '/')
   showIndexPage(@Res() res: Response) {
     return this.urlService.showIndexPage(res);
   }
