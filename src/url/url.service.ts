@@ -20,13 +20,13 @@ export class UrlService {
     });
     if (!existingUrl) {
       // You can use site subdirectories for url shortener. For example, example.com/c/ instead of example.com
-      if (
-        removeSlashes(url) === removeSlashes(new URL(process.env.HOST).pathname)
-      ) {
-        return res.sendFile(path.join(pagesRoot, 'index.html'));
-      }
-      return res.sendFile(path.join(pagesRoot, '404.html'));
-      // throw new HttpException("Url doesn't exist!", 404);
+      // if (
+      //   removeSlashes(url) === removeSlashes(new URL(process.env.HOST).pathname)
+      // ) {
+      //   return res.sendFile(path.join(pagesRoot, 'index.html'));
+      // }
+      // return res.sendFile(path.join(pagesRoot, '404.html'));
+      throw new HttpException("Url doesn't exist!", 404);
     }
     existingUrl.visitCount++;
     UrlDataSource.manager.save(existingUrl);
