@@ -8,6 +8,7 @@ import { addHttp, isUrl } from './helpers/urlHelpers';
 import { IUrlQuery } from './types';
 import { pagesRoot } from '../app.module';
 import * as path from 'path';
+import removeSlashes from '../helpers/removeSlashes';
 
 const urlRepository = UrlDataSource.getRepository(Url);
 
@@ -18,6 +19,12 @@ export class UrlService {
       where: { shortCode: url },
     });
     if (!existingUrl) {
+      // You can use site subdirectories for url shortener. For example, example.com/c/ instead of example.com
+      if (
+        removeSlashes(url) === removeSlashes(new URL(process.env.HOST).pathname)
+      ) {
+        return res.sendFile(path.join(pagesRoot, 'index.html'));
+      }
       return res.sendFile(path.join(pagesRoot, '404.html'));
       // throw new HttpException("Url doesn't exist!", 404);
     }
