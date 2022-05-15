@@ -32,3 +32,5 @@ import * as path from 'path';
 })
 export class AppModule {}
 export const pagesRoot = path.join(__dirname, '..', 'pages');
+// You can use site subdirectories for url shortener. For example, example.com/c/ instead of example.com
+export const rootPath = new URL(process.env.HOST).pathname;

@@ -13,12 +13,13 @@ import { UrlService } from './url.service';
 import { AddUrlDto } from './dto/add-url.dto';
 import { IUrlQuery } from './types';
 import { Throttle } from '@nestjs/throttler';
+import { rootPath } from '../app.module';
 
 @Controller()
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
-  @Get()
+  @Get(rootPath)
   showIndexPage(@Res() res: Response) {
     return this.urlService.showIndexPage(res);
   }
